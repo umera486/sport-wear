@@ -34,8 +34,8 @@ export default function Hero() {
       {/* 1. PERSISTENT DARK VEIL (Prevents the brightness flash) */}
       <div className="absolute inset-0 z-10 bg-black/40 pointer-events-none" />
 
-      {/* 2. IMAGE ENGINE */}
-      <AnimatePresence mode="alternate">
+      {/* 2. IMAGE ENGINE - FIXED: Changed invalid "alternate" mode to "wait" */}
+      <AnimatePresence mode="wait">
         <motion.div
           key={index}
           initial={{ opacity: 0 }}
@@ -66,17 +66,17 @@ export default function Hero() {
             {ASSETS[index].subtitle}
           </span>
 
-          <h1 className="text-5xl md:text-8xl lg:text-9xl font-extralight tracking-[ -0.05em] uppercase mb-12">
+          <h1 className="text-5xl md:text-8xl lg:text-9xl font-extralight tracking-[-0.05em] uppercase mb-12">
             {ASSETS[index].title}
           </h1>
 
           <div className="flex justify-center">
-           <Link 
-  href="/product" 
-  className="text-[10px] tracking-[0.5em] uppercase font-extralight border border-white/10 px-12 py-5 hover:bg-white hover:text-black transition-all duration-700"
->
-  Explore_Archive
-</Link>
+            <Link 
+              href="/product" 
+              className="text-[10px] tracking-[0.5em] uppercase font-extralight border border-white/10 px-12 py-5 hover:bg-white hover:text-black transition-all duration-700"
+            >
+              Explore_Archive
+            </Link>
           </div>
         </motion.div>
       </div>
