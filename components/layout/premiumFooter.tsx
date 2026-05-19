@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion"; // FIXED: Imported Variants type
 import { ArrowUpRight, Hash, Share2, Video, Globe } from "lucide-react";
 
 export default function PremiumFooter() {
@@ -9,13 +9,15 @@ export default function PremiumFooter() {
   const crimsonDark = "#4a120a"; // Deep crimson for "shadows"
   const ochre = "#e9b44c";
 
-  const containerVariants = {
+  // FIXED: Explicitly typed as Variants to resolve TypeScript error
+  const containerVariants: Variants = {
     visible: {
       transition: { staggerChildren: 0.05 }
     }
   };
 
-  const itemVariants = {
+  // FIXED: Explicitly typed as Variants to resolve TypeScript error
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 5 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }
   };
@@ -26,18 +28,23 @@ export default function PremiumFooter() {
     { title: "Support", links: ["Shipping", "Returns", "Contact", "FAQ"] }
   ];
 
+  const socialIcons = [
+    { Icon: Hash, key: "hash" },
+    { Icon: Share2, key: "share" },
+    { Icon: Video, key: "video" },
+    { Icon: Globe, key: "globe" }
+  ];
+
   return (
-    // Removed bg-black, replaced with solid Crimson base
     <footer style={{ backgroundColor: crimsonDark }} className="relative w-full py-24 overflow-hidden border-t border-white/10">
       
-      {/* 1. CRIMSON DEPTH LAYER: No black gradients here */}
+      {/* 1. CRIMSON DEPTH LAYER */}
       <div className="absolute inset-0 z-0">
         <img 
           src="/footer.png" 
           alt="Legacy" 
           className="w-full h-full object-cover opacity-[0.2] grayscale brightness-125 contrast-125 pointer-events-none"
         />
-        {/* Layered Crimson Gradients for depth without using black */}
         <div 
           className="absolute inset-0" 
           style={{ 
@@ -71,14 +78,14 @@ export default function PremiumFooter() {
           </motion.div>
 
           <div className="flex gap-6">
-            {[<Hash size={18} key="h"/>, <Share2 size={18} key="s"/>, <Video size={18} key="v"/>, <Globe size={18} key="g"/>].map((icon, i) => (
+            {socialIcons.map(({ Icon, key }) => (
               <motion.a 
-                key={i} 
+                key={key} 
                 href="#" 
                 whileHover={{ y: -3, color: "white" }}
                 className="text-white/40 transition-colors duration-200"
               >
-                {icon}
+                <Icon size={18} />
               </motion.a>
             ))}
           </div>
