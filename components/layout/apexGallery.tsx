@@ -21,13 +21,17 @@ const PRODUCT_DATA = {
 
 export default function ApexCommandGallery() {
   const [activeCat, setActiveCat] = useState("SHIRTS");
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState<any>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const crimson = "#9b2915";
   const ochre = "#e9b44c";
 
-  const currentItems = useMemo(() => PRODUCT_DATA[activeCat] || [], [activeCat]);
+  // FIXED: Explicitly casting activeCat as keyof typeof PRODUCT_DATA to bypass TS index error
+  const currentItems = useMemo(() => {
+    const categoryKey = activeCat as keyof typeof PRODUCT_DATA;
+    return PRODUCT_DATA[categoryKey] || [];
+  }, [activeCat]);
 
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
